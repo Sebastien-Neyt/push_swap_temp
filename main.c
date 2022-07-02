@@ -6,7 +6,7 @@
 /*   By: sneyt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:30:49 by sneyt             #+#    #+#             */
-/*   Updated: 2022/07/02 13:18:34 by sneyt            ###   ########.fr       */
+/*   Updated: 2022/07/02 16:12:47 by sneyt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,20 +234,12 @@ void	sort_three(t_stack *stack)
 	}
 }
 
-void	check_if_rev(t_stack *stack)
-{
-	int	i;
-
-	i = 0;
-	
-}
 
 void	sort_five(t_stack *stack_a, t_stack *stack_b)
 {
 	int	i_a;
 	int	top;
 
-	check_if_rev(stack_a);
 
 	pop_element(stack_b, stack_a);
 	pop_element(stack_b, stack_a);
@@ -293,6 +285,120 @@ void	sort_five(t_stack *stack_a, t_stack *stack_b)
 	}
 }
 
+
+void	check_top(t_stack *stack_a, t_stack *stack_b, int midvalue)
+{
+	int	i;
+	i = stack_a->count - 1;
+	while (midvalue > stack_a->arr[i] || i == 0)
+	{
+		pop_element(stack_b, stack_a);
+		i--;
+	}
+}
+
+void	check_bottom(t_stack *stack_a, t_stack *stack_b, int midvalue)
+{
+	while (midvalue > stack_a->arr[0])
+	{
+		reverse_reversed(stack_a);
+		pop_element(stack_b, stack_a);
+	}
+}
+
+int copy_arr(int *temp, t_stack *stack_a)
+{
+	int	i;
+	
+	i = 0;
+	temp = malloc(sizeof(int) * stack_a->count);
+	if (!temp)
+		return (0);
+	while (i < stack_a->count)
+	{
+		temp[i] = stack_a->arr[i];
+		i++;
+	}
+	return (1);
+}
+
+int		find_midpoint(t_stack *stack_a)
+{
+	int	temp[stack_a->count];
+	int	i;
+	int	count = 0;
+	int x = stack_a->count;
+	int	tmp;
+
+	//making a copy of the array
+	int	y = 0;
+	while (y < stack_a->count)
+	{
+		temp[y] = stack_a->arr[y];
+		y++;
+	}
+	
+	while (count < x) // 0 < 5
+	{
+		i = 0;
+		while (i < x - 1) // 0 < 5
+		{
+			if (temp[i] > temp[i + 1])
+			{
+				tmp = temp[i + 1];
+				temp[i + 1] = temp[i];
+				temp[i] = tmp;
+			}
+			i++;
+		}
+		count++;
+	}
+
+	tmp = temp[stack_a->count / 2];
+	return (tmp);
+}
+
+void	midpointsort(t_stack *stack_a, t_stack *stack_b)
+{
+	int midvalue;
+	int	i;
+	int	counter;
+	int	initial_count;
+
+	initial_count = stack_a->count;
+	counter = 0;
+	midvalue = find_midpoint(stack_a);
+
+	check_top(stack_a, stack_b, midvalue);
+	check_bottom(stack_a, stack_b, midvalue);
+	
+	while (counter < (initial_count / 2))
+	{
+		//checking top, if its bigger or equal we reverse it
+		while (midvalue <= stack_a->arr[stack_a->count - 1])
+		{
+			reverse(stack_a);
+			break ;
+		}
+		//as soon as its smaller, we pop
+		while (midvalue > stack_a->arr[stack_a->count - 1])
+		{
+			pop_element(stack_b, stack_a);				
+			counter++;
+		}
+		counter++;
+
+		/*again checking top and reversing when bigger or equal
+		while (midvalue <= stack_a->arr[stack_a->count - 1])
+			reverse(stack_a);
+		//
+		while (midvalue > stack_a->arr[stack_a->count - 1])
+			pop_element(stack_b, stack_a);
+		*/
+	}
+}
+
+
 //////////////////////////////////////////////////////////////////////
 
 int	main(int argc, char *argv[])
@@ -337,7 +443,7 @@ int	main(int argc, char *argv[])
 		}
 		x++;
 	}
-
+	
 	visualize_stack(stack_a);
 		
 	// initializing stack_b
@@ -349,9 +455,11 @@ int	main(int argc, char *argv[])
 		sort_five(stack_a, stack_b);
 	else if (stack_a->count == 3)
 		sort_three(stack_a);
+	midpointsort(stack_a, stack_b);
 	visualize_stack(stack_a);
 	visualize_stack(stack_b);
 	check_if_sorted(stack_a);
+	//printf("%d\n", find_midpoint(stack_a));
 	printf(GREEN"OPERATIONS : %d\n"RESET_COLOR, operations);
 
 }
