@@ -6,7 +6,7 @@
 /*   By: sneyt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:30:49 by sneyt             #+#    #+#             */
-/*   Updated: 2022/07/02 17:23:36 by sneyt            ###   ########.fr       */
+/*   Updated: 2022/07/02 17:27:20 by sneyt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	visualize_stack(t_stack *stack)
 	i = stack->count - 1;
 	while (i >= 0)
 	{
-		printf("[%d]\n", stack->arr[i]);
+		printf("          [ %d ]\n", stack->arr[i]);
 		i--;
 	}
-	printf(CYAN"\n###INFO ABOUT THE STACK###\n");
-	printf("--[STACK_%c]--\n", stack->name);
+	//printf(CYAN"\n###INFO ABOUT THE STACK###\n");
+	printf(CYAN"\n    ----[STACK_%c]----\n", stack->name);
 	printf("TOP of the stack : %d\n", stack->arr[stack->count - 1]);
 	printf("Count of the stack : %d\n", stack->count);
    	printf("Size of the stack: %d\n\n---------------------------\n"RESET_COLOR, stack->size);
