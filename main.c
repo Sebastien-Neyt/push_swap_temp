@@ -6,7 +6,7 @@
 /*   By: sneyt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:30:49 by sneyt             #+#    #+#             */
-/*   Updated: 2022/07/02 17:27:20 by sneyt            ###   ########.fr       */
+/*   Updated: 2022/07/02 17:32:32 by sneyt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,10 +338,10 @@ int		find_midpoint(t_stack *stack_a)
 		y++;
 	}
 	
-	while (count < x) // 0 < 5
+	while (count < x)
 	{
 		i = 0;
-		while (i < x - 1) // 0 < 5
+		while (i < x - 1) 
 		{
 			if (temp[i] > temp[i + 1])
 			{
@@ -389,6 +389,56 @@ void	midpointsort(t_stack *stack_a, t_stack *stack_b)
 			counter++;
 		}
 	}
+
+	///////////////////CREATING THE NEXT CHUNK -> PUT IN A LOOP/////////////
+	status = 0;
+	initial_count = stack_a->count;
+	counter = 0;
+	midvalue = find_midpoint(stack_a);
+	printf("THIS IS THE MIDVALUE: %d\n", midvalue);
+	//check_top(stack_a, stack_b, midvalue);
+	//check_bottom(stack_a, stack_b, midvalue);
+	
+	while (counter < (initial_count / 2))
+	{
+		//checking top, if its bigger or equal we reverse it
+		while (midvalue <= stack_a->arr[stack_a->count - 1])
+		{
+			reverse(stack_a);
+			break ;
+		}
+		//as soon as its smaller, we pop
+		while (midvalue > stack_a->arr[stack_a->count - 1])
+		{
+			pop_element(stack_b, stack_a);				
+			counter++;
+		}
+	}
+	/////////////////////////////
+	status = 0;
+	initial_count = stack_a->count;
+	counter = 0;
+	midvalue = find_midpoint(stack_a);
+	printf("THIS IS THE MIDVALUE: %d\n", midvalue);
+	//check_top(stack_a, stack_b, midvalue);
+	//check_bottom(stack_a, stack_b, midvalue);
+	
+	while (counter < (initial_count / 2))
+	{
+		//checking top, if its bigger or equal we reverse it
+		while (midvalue <= stack_a->arr[stack_a->count - 1])
+		{
+			reverse(stack_a);
+			break ;
+		}
+		//as soon as its smaller, we pop
+		while (midvalue > stack_a->arr[stack_a->count - 1])
+		{
+			pop_element(stack_b, stack_a);				
+			counter++;
+		}
+	}
+
 }
 
 
