@@ -6,7 +6,7 @@
 /*   By: sneyt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:30:49 by sneyt             #+#    #+#             */
-/*   Updated: 2022/07/02 16:12:47 by sneyt            ###   ########.fr       */
+/*   Updated: 2022/07/02 17:15:09 by sneyt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,13 +364,15 @@ void	midpointsort(t_stack *stack_a, t_stack *stack_b)
 	int	i;
 	int	counter;
 	int	initial_count;
+	int status;
 
+	status = 0;
 	initial_count = stack_a->count;
 	counter = 0;
 	midvalue = find_midpoint(stack_a);
-
-	check_top(stack_a, stack_b, midvalue);
-	check_bottom(stack_a, stack_b, midvalue);
+	printf("THIS IS THE MIDVALUE: %d\n", midvalue);
+	//check_top(stack_a, stack_b, midvalue);
+	//check_bottom(stack_a, stack_b, midvalue);
 	
 	while (counter < (initial_count / 2))
 	{
@@ -386,15 +388,6 @@ void	midpointsort(t_stack *stack_a, t_stack *stack_b)
 			pop_element(stack_b, stack_a);				
 			counter++;
 		}
-		counter++;
-
-		/*again checking top and reversing when bigger or equal
-		while (midvalue <= stack_a->arr[stack_a->count - 1])
-			reverse(stack_a);
-		//
-		while (midvalue > stack_a->arr[stack_a->count - 1])
-			pop_element(stack_b, stack_a);
-		*/
 	}
 }
 
