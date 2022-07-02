@@ -6,7 +6,7 @@
 /*   By: sneyt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:30:49 by sneyt             #+#    #+#             */
-/*   Updated: 2022/07/02 17:15:09 by sneyt            ###   ########.fr       */
+/*   Updated: 2022/07/02 17:23:36 by sneyt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -455,4 +455,7 @@ int	main(int argc, char *argv[])
 	//printf("%d\n", find_midpoint(stack_a));
 	printf(GREEN"OPERATIONS : %d\n"RESET_COLOR, operations);
 
+	// stack for testing : 11 8 1 4 7 9 6 10 12 5 3 2
 }
+
+
