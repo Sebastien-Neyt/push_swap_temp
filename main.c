@@ -6,7 +6,7 @@
 /*   By: sneyt <sneyt@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 16:30:49 by sneyt             #+#    #+#             */
-/*   Updated: 2022/07/05 18:09:11 by sneyt            ###   ########.fr       */
+/*   Updated: 2022/07/06 11:49:48 by sneyt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct	s_stack{
 	int	chunk_count;
 	int	chunk_number;
 	char name;
+	int  from_bottom;
 }	t_stack;
 
 //UTILS/////////////////////////////////////////////////////////////////////////////
@@ -65,9 +66,9 @@ void	visualize_chunks(t_stack *stack)
 		printf("          [ %d ]\n", stack->chunks[i]);
 		i--;
 	}
-	printf("Chunk_count of the chunksstack : %d\n", stack->chunk_count);
-	printf("Chunk_number of the chunksstack : %d\n", stack->chunk_number);
-	printf("---------------------------------------------------\n");
+	//printf("Chunk_count of the chunksstack : %d\n", stack->chunk_count);
+	//printf("Chunk_number of the chunksstack : %d\n", stack->chunk_number);
+	//printf("---------------------------------------------------\n");
 }
 
 void	set_chunks(t_stack *stack, int	sizeofchunk)
@@ -125,6 +126,7 @@ t_stack *init_stack_b(t_stack *stack_a)
 		return (0);
 	stack->count = 0;
 	stack->name = 'b';
+	stack->from_bottom = 0;
 	stack->size = stack_a->size;
 	stack->chunk_count = 0;
 	stack->arr = malloc(sizeof(int) * stack->size);
@@ -152,6 +154,7 @@ t_stack *init_stack(char *argv[], int size)
 		return (0);
 	i = 1;
 	stack->count = 0;
+	stack->from_bottom = 0;
 	stack->chunk_count = 0;
 	stack->name = 'a';
 	stack->size = size;
@@ -180,6 +183,7 @@ t_stack *init_stack_1arg(char *argv[], int size)
 		return (0);
  	i = 0;
 	stack->count = 0;
+	stack->from_bottom = 0;
 	stack->chunk_count = 0;
 	stack->name = 'a';
 	stack->size = size;
@@ -212,12 +216,12 @@ int	check_if_sorted(t_stack *stack)
 		{
 			if (stack->arr[i] < stack->arr[i + 1])
 			{
-				printf(RED"\n[The stack is NOT sorted]\n\n"RESET_COLOR);
+				//printf(RED"\n[The stack is NOT sorted]\n\n"RESET_COLOR);
 				return (0);
 			}
 			i++;
 		}
-		printf(GREEN"\n[The stack is sorted!]\n\n"RESET_COLOR);
+		//printf(GREEN"\n[The stack is sorted!]\n\n"RESET_COLOR);
 		return (1);
 	}
 	else
@@ -226,12 +230,12 @@ int	check_if_sorted(t_stack *stack)
 		{
 			if (stack->arr[i] > stack->arr[i + 1])
 			{
-				printf(RED"\n[The stack is NOT sorted]\n\n"RESET_COLOR);
+				//printf(RED"\n[The stack is NOT sorted]\n\n"RESET_COLOR);
 				return (0);
 			}
 			i++;
 		}
-		printf(GREEN"\n[The stack is sorted!]\n\n"RESET_COLOR);
+		//printf(GREEN"\n[The stack is sorted!]\n\n"RESET_COLOR);
 		return (1);
 	}
 }
@@ -432,7 +436,7 @@ int find_midpoint_chunk2(t_stack *stack, int resting_chunksize)
 		i--;
 		x++;
 	}
-	printf("%d %d %d\n", temp[0], temp[1], temp[2]);	
+	//printf("%d %d %d\n", temp[0], temp[1], temp[2]);	
 	
 	x = resting_chunksize;
 	
@@ -452,7 +456,7 @@ int find_midpoint_chunk2(t_stack *stack, int resting_chunksize)
 		a++;
 	}
 	value = temp[resting_chunksize / 2 ];
-	printf("%d %d %d %d %d %d \n", temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);	
+	//printf("%d %d %d %d %d %d \n", temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);	
 	return (value);
 }
 
@@ -471,7 +475,7 @@ int	find_midpoint_chunk(t_stack *stack, int chunksize)
 		i--;
 		x++;
 	}
-	printf("%d %d %d\n", temp[0], temp[1], temp[2]);	
+	//printf("%d %d %d\n", temp[0], temp[1], temp[2]);	
 	
 	x = chunksize;
 	
@@ -491,7 +495,7 @@ int	find_midpoint_chunk(t_stack *stack, int chunksize)
 		a++;
 	}
 	value = temp[chunksize / 2 ];
-	printf("%d %d %d %d %d %d \n", temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);	
+	//printf("%d %d %d %d %d %d \n", temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);	
 	return (value);
 }
 
@@ -558,8 +562,7 @@ int	check_if_bigger(t_stack *stack_b, int midvalue, int chunksize)
 	{
 		if (stack_b->arr[stack_b->count - 1 - i] > midvalue)
 		{
-			usleep(100000);
-			printf("found bigger one!!\n");
+			//printf("found bigger one!!\n");
 			return (1);
 		}
 		i++;
@@ -579,16 +582,16 @@ int		midpointsort(t_stack *stack_a, t_stack *stack_b)
 	initial_count = stack_a->count;
 	counter = 0;
 	midvalue = find_midpoint(stack_a);
-	printf("THIS IS THE MIDVALUE: %d\n", midvalue);
+	//printf("THIS IS THE MIDVALUE: %d\n", midvalue);
 	visualize_stack(stack_a);
 	visualize_stack(stack_b);
-	printf("***********************************************************************************\n");
+	//printf("***********************************************************************************\n");
 	//check_top(stack_a, stack_b, midvalue);
 	//check_bottom(stack_a, stack_b, midvalue);
 	
 	while (counter < (initial_count / 2) || !check_if_smaller(stack_a, midvalue)) 
 	{
-		usleep(100000);
+		//usleep(100000);
 		//checking top, if its bigger or equal we reverse it (only the when we have checked the botom)
 		while (midvalue <= stack_a->arr[stack_a->count - 1] && status != 0)
 		{
@@ -620,7 +623,6 @@ int		check_top_second(int midvalue, t_stack *stack_b, int status)
 	rb_count = 0;
 	while (midvalue >= stack_b->arr[stack_b->count - 1] && status != 0 && stack_b->count > 0)
 	{
-		usleep(100000);	
 		//adding counter to keep  track
 		if (stack_b->chunk_number != 0)
 			rb_count++;
@@ -663,7 +665,6 @@ int	check_bottom_chunk(int midvalue, t_stack *stack_a, t_stack *stack_b, int chu
 		int p = 0;
 		while (p < chunksize - x)
 		{
-			usleep(100000);
 			reverse(stack_b);
 			p++;
 		}
@@ -680,6 +681,126 @@ int	check_bottom_chunk(int midvalue, t_stack *stack_a, t_stack *stack_b, int chu
 		}
 	}
 	return (counter);
+}
+
+int	find_biggest(t_stack *stack_b, int chunksize, int limit)
+{
+	int i;
+	int x;
+	int value;
+	int from_bottom = stack_b->from_bottom;
+	i = 1;
+	value = stack_b->arr[stack_b->count - 1];
+	x = 1;
+	//printf("value : %d, limit : %d, chunksize : %d , frombottom : %d, stackcount: %d\n", value, limit, chunksize, from_bottom, stack_b->count);
+	while ((stack_b->count - i - from_bottom) >= limit)
+	{
+		if (stack_b->arr[stack_b->count - i] > value)
+		{
+			value = stack_b->arr[stack_b->count - i];
+			x = i;
+			//printf("value => %d\n", value);
+		}
+		i++;
+	}
+	while (from_bottom > 0)
+	{
+		int a = 0;
+		if (from_bottom > stack_b->count)
+			a = 1;
+		if (stack_b->arr[from_bottom - 1 - a] > value)
+		{
+			value = stack_b->arr[from_bottom - 1 - a];
+			x = -from_bottom - a;
+			//printf("value bottom => %d\n", value);
+		}
+		from_bottom--;
+	}
+	return (x);
+}
+
+void	chunk_sort(t_stack *stack_a, t_stack *stack_b)
+{
+	// depending on the chunksize, we look for the biggest element inside the chunk and rotate/pop it
+	int	chunksize;
+	int limit;
+	int rotates;
+	int i_biggest;
+	int from_bottom;
+	
+	chunksize = count_chunk_size(stack_b);
+	limit = stack_b->chunk_count - chunksize;
+	//printf("chunksize : %d || limit : %d\n", chunksize, limit);
+	
+	while (chunksize > 0)
+	{
+		//printf("#######################################################\n");
+		if (chunksize == 1 && stack_b->from_bottom == 0)
+		{
+			pop_element(stack_a, stack_b);
+			chunksize--;
+			stack_b->chunk_count--;
+			break ;
+		}
+		i_biggest = find_biggest(stack_b, chunksize, limit); //if 1, means it's the top of the stack
+		//printf("i_biggest %d\n", i_biggest);
+		
+		rotates = i_biggest - 1;
+		//printf("rotates : %d\n", rotates);
+		if (stack_b->from_bottom == 0)
+		{
+			while (i_biggest > 1)
+			{
+				reverse(stack_b);
+				stack_b->from_bottom++;
+				i_biggest--;	//can check the bottom of the stack for bigger ones and reverse rotate if that's faster
+								// if it's the final chunk, we should check from the bottom aswell
+			}
+			pop_element(stack_a, stack_b);
+			chunksize--;
+			stack_b->chunk_count--;
+		}
+		
+		i_biggest = find_biggest(stack_b, chunksize, limit);
+		//printf("i_biggest second : %d\n", i_biggest);
+		if (i_biggest < 0)
+		{
+			while (i_biggest < 0)
+			{
+				reverse_reversed(stack_b);
+				stack_b->from_bottom--;
+				i_biggest++;
+			}
+			pop_element(stack_a, stack_b);
+			chunksize--;
+			stack_b->chunk_count--;
+		}
+		
+		if (i_biggest > 0)
+		{
+			while (i_biggest > 1)
+			{
+				reverse(stack_b);
+				stack_b->from_bottom++;
+				i_biggest--;	//can check the bottom of the stack for bigger ones and reverse rotate if that's faster
+			}
+			pop_element(stack_a, stack_b);
+			chunksize--;
+			stack_b->chunk_count--;
+		}
+		//visualize_stack(stack_a);
+		//visualize_stack(stack_b);
+		/*
+		while (rotates > 0)
+		{				
+			reverse_reversed(stack_b);
+			stack_b->from_bottom--;
+			rotates--;
+		}
+		*/
+		//printf("THIS IS THE FROM BOTTOM: %d \n", stack_b->from_bottom);
+	}
+		
 }
 
 void	restore_midpoint(t_stack *stack_a, t_stack *stack_b)
@@ -732,7 +853,6 @@ void	restore_midpoint(t_stack *stack_a, t_stack *stack_b)
 			while ((limit <= stack_b->chunk_count) && check_if_bigger(stack_b, midvalue, chunksize - counter) && stack_b->count > 0) 
 					//||(limit < stack_b->chunk_count && check_if_bigger(stack_b, midvalue, chunksize - counter)))
 			{
-				usleep(100000);
 				while (check_if_bigger(stack_b, midvalue, chunksize - counter) && stack_b->count > 0)
 				{
 					
@@ -877,7 +997,7 @@ int	main(int argc, char *argv[])
 		x++;
 	}
 	
-	visualize_stack(stack_a);
+	//visualize_stack(stack_a);
 		
 	// initializing stack_b
 	stack_b = init_stack_b(stack_a);
@@ -890,9 +1010,9 @@ int	main(int argc, char *argv[])
 		sort_three(stack_a);
 	int size_of_chunk;
 	stack_b->chunk_number = 0;
+	
 	while (stack_a->count > 2)
 	{
-		usleep(100000);
 		size_of_chunk = midpointsort(stack_a, stack_b);
 		set_chunks(stack_b, size_of_chunk);
 		//stack_b->chunk_number++;
@@ -900,17 +1020,29 @@ int	main(int argc, char *argv[])
 	//sort_three(stack_a);
 		
 	//visualize_chunks(stack_b);
-	visualize_stack(stack_a);
-	visualize_stack(stack_b);
+	//visualize_stack(stack_a);
+	//visualize_stack(stack_b);
 	if(!check_if_sorted(stack_a))
 		swap(stack_a);
 	//printf("%d\n", find_midpoint(stack_a));
 	//printf(GREEN"OPERATIONS : %d\n"RESET_COLOR, operations);
-	restore_midpoint(stack_a, stack_b);	
+	
+	
+	while (stack_b->count > 0)
+		chunk_sort(stack_a, stack_b);
+	
+
+	
+	//restore_midpoint(stack_a, stack_b);	
+	
+	
 	//visualize_chunks(stack_b);
-	visualize_stack(stack_a);
-	visualize_stack(stack_b);
-	check_if_sorted(stack_a);
+	
+	//visualize_stack(stack_a);
+	//visualize_stack(stack_b);
+	if(check_if_sorted(stack_a))
+		printf(GREEN"THE STACK IS SORTED!\n"RESET_COLOR);
+	
 	printf(GREEN"OPERATIONS : %d\n"RESET_COLOR, operations);
 	/*
 	printf("this is the first chunksize %d\n", count_chunk_size(stack_b));
